@@ -12,6 +12,10 @@
   font-style: normal;
 }
 
+*::-webkit-scrollbar {
+  display: none;
+}
+
 .kumar {
   font-family: "Kumar One", serif;
   font-weight: 400;
