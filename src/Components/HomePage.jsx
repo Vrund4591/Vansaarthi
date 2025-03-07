@@ -1,44 +1,35 @@
 import { TreePine, Heart, UsersRound, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import Card from "./Card";
 import { useState, useEffect } from 'react';
-import { motion } from "framer-motion";
-import { AnimateOnScroll } from "./AnimateOnScroll";
-import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from "framer-motion"; // Add AnimatePresence import
+import { AnimateOnScroll } from "./AnimateonScroll";
+import { useNavigate, Link } from 'react-router-dom';
 // import bg from '../../public/bg.jpg';
-const galleryData = [
-  {
-    id: 1,
-    src: '/bg.png',
-    title: 'Tree Plantation Drive',
-    description: 'Community effort in planting trees',
-  },
-  {
-    id: 2,
-    src: '/plant.jpeg',
-    title: 'Animal Rescue',
-    description: 'Helping animals in need',
-  },
-  {
-    id: 3,
-    src: '/bg.png',
-    title: 'Community Service',
-    description: 'Working with local communities',
-  },
-  {
-    id: 4,
-    src: '/plant.jpeg',
-    title: 'Environmental Clean-up',
-    description: 'Cleaning our surroundings',
-  },
-  // Add more images easily with this structure
-];
 const bg = '/bg.jpg';
 const impactData = [
   { number: '10000', text: 'Trees Planted', color: 'text-[#3BDE3B]' },
-  { number: '500', text: 'Animals Rescued', color: 'text-blue-500' },
+  { number: '3000', text: 'Animals Rescued', color: 'text-blue-500' },
   { number: '50', text: 'Communities Served', color: 'text-[#3BDE3B]' },
   { number: '1000', text: 'Volunteers', color: 'text-blue-500' }
 ];
+
+// Add these animation variants outside the component
+const slideVariants = {
+  enter: (direction) => ({
+    x: direction === "next" ? 1000 : -1000,
+    opacity: 0
+  }),
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1
+  },
+  exit: (direction) => ({
+    zIndex: 0,
+    x: direction === "next" ? -1000 : 1000,
+    opacity: 0
+  })
+};
 
 const HomePage = () => {
   const [showTitle, setShowTitle] = useState(false);
@@ -46,17 +37,21 @@ const HomePage = () => {
   const [showCard2, setShowCard2] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [direction, setDirection] = useState('next');
+  const [galleryData, setGalleryData] = useState([]);
   const navigate = useNavigate();
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
     const titleTimer = setTimeout(() => setShowTitle(true), 800);
     const card1Timer = setTimeout(() => setShowCard1(true), 900);
     const card2Timer = setTimeout(() => setShowCard2(true), 910);
 
-    // Image slider auto-rotation
+    // Image slider auto-rotation with safety checks
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % galleryData.length);
-    }, 3000);
+      if (galleryData.length > 0) {  // Only rotate if we have images
+        setCurrentImageIndex((prev) => (prev + 1) % galleryData.length);
+      }
+    }, 5000); // Increased to 5 seconds for smoother transitions
 
     return () => {
       clearTimeout(titleTimer);
@@ -64,11 +59,56 @@ const HomePage = () => {
       clearTimeout(card2Timer);
       clearInterval(interval);
     };
+  }, [galleryData.length]); // Added dependency
+
+  useEffect(() => {
+    // Function to load images from public/gallery
+    const loadGalleryImages = async () => {
+      try {
+        // Get list of files from public/gallery directory
+        const images = await import.meta.glob('/public/gallery/*');
+        
+        // Transform the images into our gallery data format
+        const galleryItems = Object.keys(images).map((path, index) => ({
+          id: index + 1,
+          src: path.replace('/public', ''), // Remove /public from path
+          // title: `${index + 1}`,
+        }));
+        
+        setGalleryData(galleryItems);
+      } catch (error) {
+        console.error('Error loading gallery images:', error);
+        // Fallback to empty array if there's an error
+        setGalleryData([]);
+      }
+    };
+
+    loadGalleryImages();
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Get gallery section position
+      const gallerySection = document.getElementById('gallery-section');
+      if (gallerySection) {
+        const rect = gallerySection.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
+        
+        // Reset animation when section is out of view
+        if (!isVisible && hasAnimated) {
+          setHasAnimated(false);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hasAnimated]);
 
   // Helper function to get image at index with wraparound
   const getImageAt = (index) => {
-    const wrappedIndex = (index + galleryData.length) % galleryData.length;
+    if (!galleryData.length) return null;
+    const wrappedIndex = ((index % galleryData.length) + galleryData.length) % galleryData.length;
     return galleryData[wrappedIndex];
   };
 
@@ -85,16 +125,13 @@ const HomePage = () => {
     <div className='w-full overflow-x-hidden'>
       {/* Hero Section */}
       <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
         className="relative flex justify-between items-center min-h-screen w-full"
       >
         <div style={{ backgroundImage: `url(${bg})` }} className="absolute top-0 left-0 w-full h-full bg-cover bg-center z-0" >
 
-        
-        
-        
 
         <div className="relative flex flex-col justify-center items-center w-full max-w-[1200px] mx-auto px-4 z-10 pt-64">
             <div className={`transform transition-all duration-1000 opacity-0 ${showTitle ? 'opacity-100' : ''}`}>
@@ -104,7 +141,7 @@ const HomePage = () => {
                 <div className="py-3 md:py-5 text-black px-2 md:px-4 w-full md:w-[700px] text-base md:text-xl text-center">Life is impossible without nature. Join us in preserving our planet for future generations.</div>
             </div>
             <div className={`mt-3 md:mt-5 transform transition-all duration-1000 opacity-0 ${showCard2 ? 'opacity-100' : ''}`}>
-                <Card backgroundColor="bg-[#ff615e] hover:bg-[#ff4744] transition-colors" textColor="text-black">
+                <Card backgroundColor="bg-[#F97316] hover:bg-orange-600 transition-colors" textColor="text-black">
                     <button 
                       onClick={handleVolunteerClick}
                       className="py-3 md:py-4 px-6 md:px-10 text-base md:text-lg"
@@ -122,7 +159,7 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto">
           <AnimateOnScroll animation="slideIn">
             <div className="inline-block mb-10">
-              <Card backgroundColor="bg-[#ff615e]" textColor="text-black">
+              <Card backgroundColor="bg-[#F97316]" textColor="text-black">
                 <div className='py-2 px-4 text-2xl md:text-4xl font-bold whitespace-nowrap'>Our Focus Areas</div>
               </Card>
             </div>
@@ -171,7 +208,7 @@ const HomePage = () => {
         <div className='max-w-7xl mx-auto px-4'>
           <AnimateOnScroll animation="slideIn">
             <div className='inline-block mb-10'>
-              <Card backgroundColor="bg-[#ff615e]" textColor="text-black">
+              <Card backgroundColor="bg-[#F97316]" textColor="text-black">
                 <div className='py-2 px-4 text-2xl md:text-4xl font-bold whitespace-nowrap'>Achievable Goals</div>
               </Card>
             </div>
@@ -186,7 +223,7 @@ const HomePage = () => {
             </AnimateOnScroll>
             <AnimateOnScroll animation="scale">
               <div className='flex flex-col justify-center items-center bg-white w-full h-32 rounded-xl border-dashed border-green-400 border-2 text-center'>
-                  <div className='text-2xl font-bold p-2'>500 Animals</div>
+                  <div className='text-2xl font-bold p-2'>3000 Animals</div>
                   <div className='text-sm p-2'>Target Animals to be Rescued</div>
               </div>
             </AnimateOnScroll>
@@ -205,7 +242,7 @@ const HomePage = () => {
         <div className='max-w-7xl mx-auto px-4'>
           <AnimateOnScroll animation="slideIn">
             <div className='inline-block mb-10'>
-              <Card backgroundColor="bg-[#ff615e]" textColor="text-black">
+              <Card backgroundColor="bg-[#F97316]" textColor="text-black">
                 <div className='py-2 px-4 text-2xl md:text-4xl font-bold whitespace-nowrap'>Our Impact</div>
               </Card>
             </div>
@@ -213,7 +250,13 @@ const HomePage = () => {
           
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
             {impactData.map((item, i) => (
-              <AnimateOnScroll key={i} animation="fadeUp">
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+              >
                 <div className='w-full'>
                   <Card backgroundColor="bg-white hover:bg-gray-50 transition-colors" textColor="text-black">
                     <div className='flex flex-col justify-center items-center h-28 w-full'>
@@ -222,18 +265,22 @@ const HomePage = () => {
                     </div>
                   </Card>
                 </div>
-              </AnimateOnScroll>
+              </motion.div>
             ))}
           </div>
         </div>
-      </div>
+    </div>
 
       {/* Gallery Section */}
-      <div className='py-12 md:py-20 bg-gray-100'>
+      <div id="gallery-section" className='py-12 md:py-20 bg-gray-100'>
         <div className='max-w-7xl mx-auto px-4'>
-          <AnimateOnScroll animation="slideIn">
+          <AnimateOnScroll 
+            animation="slideIn" 
+            onAnimationComplete={() => setHasAnimated(true)}
+            key={hasAnimated ? 'animated' : 'not-animated'} // Force re-render
+          >
             <div className='inline-block mb-10'>
-              <Card backgroundColor="bg-[#ff615e]" textColor="text-black">
+              <Card backgroundColor="bg-[#F97316]" textColor="text-black">
                 <div className='py-2 px-4 text-2xl md:text-4xl font-bold whitespace-nowrap'>Gallery</div>
               </Card>
             </div>
@@ -241,91 +288,147 @@ const HomePage = () => {
           
           <AnimateOnScroll animation="fadeIn">
             <div className='relative h-[500px] md:h-[700px] flex items-center justify-center overflow-hidden'>
+              {galleryData.length > 0 ? (
                 <div className='absolute w-full h-full flex items-center justify-center'>
-                    {/* Previous Image */}
+                  {/* Previous Image */}
+                  {getImageAt(currentImageIndex - 1) && (
                     <div 
-                        className={`absolute w-2/5 h-[280px] md:h-[420px] transition-all duration-700 ease-out
-                            hover:opacity-75 cursor-pointer`}
-                        style={{
-                            left: '5%',
-                            transform: 'perspective(2000px) rotateY(45deg) translateX(-100px) translateZ(-150px) scale(0.85)',
-                            transformOrigin: 'right center',
-                            opacity: 0.6,
-                            zIndex: 1
-                        }}
-                        onClick={() => handleImageChange((currentImageIndex - 1 + galleryData.length) % galleryData.length)}
+                      className="absolute w-2/5 h-[280px] md:h-[420px] transition-all duration-500 ease-in-out
+                          hover:opacity-75 cursor-pointer"
+                      style={{
+                        left: '5%',
+                        transform: 'perspective(2000px) rotateY(45deg) translateX(-100px) translateZ(-150px) scale(0.85)',
+                        transformOrigin: 'right center',
+                        opacity: 0.6,
+                        zIndex: 1
+                      }}
+                      onClick={() => handleImageChange((currentImageIndex - 1 + galleryData.length) % galleryData.length)}
                     >
-                        <img 
-                            src={getImageAt(currentImageIndex - 1).src} 
-                            alt={getImageAt(currentImageIndex - 1).title} 
-                            className='w-full h-full object-cover rounded-lg shadow-2xl'
-                            draggable="false"
-                        />
+                      <img 
+                        src={getImageAt(currentImageIndex - 1)?.src} 
+                        alt={getImageAt(currentImageIndex - 1)?.title || 'Previous image'} 
+                        className='w-full h-full object-cover rounded-lg shadow-2xl'
+                        draggable="false"
+                        loading="eager"
+                      />
                     </div>
+                  )}
 
-                    {/* Current Image */}
-                    <div 
-                        className={`absolute w-3/5 h-[320px] md:h-[480px] transition-all duration-700 ease-out transform
-                            ${direction === 'next' ? 'animate-slideIn' : 'animate-slideOut'}`}
-                        style={{
-                            transform: 'perspective(2000px) scale(1)',
-                            transformOrigin: 'center center',
-                            zIndex: 2
+                  {/* Current Image */}
+                  <AnimatePresence initial={false} custom={direction}>
+                    {getImageAt(currentImageIndex) && (
+                      <motion.div
+                        key={currentImageIndex}
+                        custom={direction}
+                        variants={slideVariants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        transition={{
+                          x: { type: "spring", stiffness: 300, damping: 30 },
+                          opacity: { duration: 0.2 }
                         }}
-                    >
+                        className="absolute w-3/5 h-[320px] md:h-[480px]"
+                        style={{
+                          transformOrigin: 'center center',
+                          zIndex: 2
+                        }}
+                      >
                         <div className='relative h-full rounded-lg overflow-hidden shadow-2xl'>
-                            <img 
-                                src={getImageAt(currentImageIndex).src}
-                                alt={getImageAt(currentImageIndex).title}
-                                className='w-full h-full object-cover transition-transform duration-700 hover:scale-105'
-                                draggable="false"
-                            />
-                            <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6'>
-                                <h3 className='text-xl font-semibold text-white'>
-                                    {getImageAt(currentImageIndex).title}
-                                </h3>
-                                <p className='text-sm mt-2 text-white/90'>
-                                    {getImageAt(currentImageIndex).description}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Next Image */}
-                    <div 
-                        className={`absolute w-2/5 h-[280px] md:h-[420px] transition-all duration-700 ease-out
-                            hover:opacity-75 cursor-pointer`}
-                        style={{
-                            right: '5%',
-                            transform: 'perspective(2000px) rotateY(-45deg) translateX(100px) translateZ(-150px) scale(0.85)',
-                            transformOrigin: 'left center',
-                            opacity: 0.6,
-                            zIndex: 1
-                        }}
-                        onClick={() => handleImageChange((currentImageIndex + 1) % galleryData.length)}
-                    >
-                        <img 
-                            src={getImageAt(currentImageIndex + 1).src} 
-                            alt={getImageAt(currentImageIndex + 1).title} 
-                            className='w-full h-full object-cover rounded-lg shadow-2xl'
+                          <img 
+                            src={getImageAt(currentImageIndex)?.src}
+                            alt={getImageAt(currentImageIndex)?.title || 'Current image'}
+                            className='w-full h-full object-cover transition-transform duration-700 hover:scale-105'
                             draggable="false"
-                        />
-                    </div>
-                </div>
+                            loading="eager"
+                          />
+                          <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6'>
+                            <h3 className='text-xl font-semibold text-white'>
+                              {getImageAt(currentImageIndex)?.title}
+                            </h3>
+                            <p className='text-sm mt-2 text-white/90'>
+                              {getImageAt(currentImageIndex)?.description}
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
-                {/* Navigation Dots */}
-                <div className='absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2'>
-                    {galleryData.map((_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => handleImageChange(index)}
-                            className={`transition-all duration-300 rounded-full
-                                ${index === currentImageIndex 
-                                    ? 'w-8 h-2 bg-red-500' 
-                                    : 'w-2 h-2 bg-red-500/50 hover:bg-white/70'}`}
-                        />
-                    ))}
+                  {/* Next Image */}
+                  {getImageAt(currentImageIndex + 1) && (
+                    <div 
+                      className="absolute w-2/5 h-[280px] md:h-[420px] transition-all duration-700 ease-out
+                          hover:opacity-75 cursor-pointer"
+                      style={{
+                        right: '5%',
+                        transform: 'perspective(2000px) rotateY(-45deg) translateX(100px) translateZ(-150px) scale(0.85)',
+                        transformOrigin: 'left center',
+                        opacity: 0.6,
+                        zIndex: 1
+                      }}
+                      onClick={() => handleImageChange((currentImageIndex + 1) % galleryData.length)}
+                    >
+                      <img 
+                        src={getImageAt(currentImageIndex + 1)?.src} 
+                        alt={getImageAt(currentImageIndex + 1)?.title || 'Next image'} 
+                        className='w-full h-full object-cover rounded-lg shadow-2xl'
+                        draggable="false"
+                      />
+                    </div>
+                  )}
                 </div>
+              ) : (
+                <div className="flex items-center justify-center bg-gray-100 rounded-lg w-full h-full">
+                  <p className="text-gray-500">Loading gallery...</p>
+                </div>
+              )}
+
+              {/* Navigation Dots */}
+              {galleryData.length > 0 && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className='absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1'
+                >
+                  {galleryData.length > 5 ? (
+                    // Show limited dots with current group
+                    Array.from({ length: 5 }, (_, i) => {
+                      const startIndex = Math.max(0, Math.min(
+                        currentImageIndex - 2,
+                        galleryData.length - 5
+                      ));
+                      const dotIndex = startIndex + i;
+                      
+                      return (
+                        <button
+                          key={dotIndex}
+                          onClick={() => handleImageChange(dotIndex)}
+                          className={`transition-all duration-300 rounded-full
+                            ${dotIndex === currentImageIndex 
+                              ? 'w-4 h-1.5 bg-green-500' 
+                              : 'w-1.5 h-1.5 bg-white/50 hover:bg-white/70'}`}
+                          aria-label={`Go to image ${dotIndex + 1}`}
+                        />
+                      );
+                    })
+                  ) : (
+                    // Show all dots if total images are 5 or less
+                    galleryData.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleImageChange(index)}
+                        className={`transition-all duration-300 rounded-full
+                          ${index === currentImageIndex 
+                            ? 'w-4 h-1.5 bg-green-500' 
+                            : 'w-1.5 h-1.5 bg-white/50 hover:bg-white/70'}`}
+                        aria-label={`Go to image ${index + 1}`}
+                      />
+                    ))
+                  )}
+                </motion.div>
+              )}
             </div>
           </AnimateOnScroll>
         </div>
@@ -336,6 +439,7 @@ const HomePage = () => {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
         className='bg-black text-white'
       >
         <div className='max-w-7xl mx-auto px-4'>
@@ -347,22 +451,38 @@ const HomePage = () => {
                 <div>
                     <div className='text-md font-semibold mb-4'>Quick Links</div>
                     <div className='space-y-2'>
-                        <div className='hover:text-gray-300 cursor-pointer'>About Us</div>
-                        <div className='hover:text-gray-300 cursor-pointer'>Projects</div>
-                        <div className='hover:text-gray-300 cursor-pointer'>Contact</div>
+                        <Link to="/about" className='block hover:text-gray-300 cursor-pointer transition-colors'>
+                            About Us
+                        </Link>
+                        <Link to="/projects" className='block hover:text-gray-300 cursor-pointer transition-colors'>
+                            Projects
+                        </Link>
+                        <Link to="/volunteer" className='block hover:text-gray-300 cursor-pointer transition-colors'>
+                            Volunteer
+                        </Link>
+                        <a href="#contact-section" 
+                           className='block hover:text-gray-300 cursor-pointer transition-colors'
+                           onClick={(e) => {
+                             e.preventDefault();
+                             document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
+                           }}>
+                            Contact
+                        </a>
                     </div>
                 </div>
                 <div>
                     <div id='contact-section' className='text-md font-semibold mb-4'>Connect</div>
                     <div className='flex gap-4'>
-                        <div className='hover:text-gray-300 cursor-pointer'><Facebook /></div>
+                        <div className='hover:text-gray-300 cursor-pointer'><a href="https://www.facebook.com/p/Vansaarthi-Ngo-61572960507082/?hr=1&_rdr" target="_blank" rel="noopener noreferrer">
+                                <Facebook />
+                            </a></div>
                         <div className='hover:text-gray-300 cursor-pointer'><Twitter /></div>
                         <div className='hover:text-gray-300 cursor-pointer'>
-                            <a href="https://www.instagram.com/vansarthi11/" target="_blank" rel="noopener noreferrer">
+                            <a href="https://www.instagram.com/vansaarthi11/" target="_blank" rel="noopener noreferrer">
                                 <Instagram />
                             </a>
                         </div>
-                        <div className='hover:text-gray-300 cursor-pointer'><Linkedin /></div>
+                        {/* <div className='hover:text-gray-300 cursor-pointer'><Linkedin /></div> */}
                     </div>
                 </div>
                 <div>

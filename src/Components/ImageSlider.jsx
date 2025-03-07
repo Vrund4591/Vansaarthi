@@ -18,7 +18,7 @@ const ImageSlider = ({ images = [] }) => {
         {images.map((image, index) => (
           <div
             key={index}
-            className={`absolute w-full h-full transition-transform duration-500 ease-in-out ${
+            className={`absolute w-full h-full transition-all duration-500 ease-in-out overflow-hidden ${
               index === currentIndex ? 'translate-x-0' : 'translate-x-full'
             }`}
             style={{ transform: `translateX(${100 * (index - currentIndex)}%)` }}
@@ -26,7 +26,7 @@ const ImageSlider = ({ images = [] }) => {
             <img
               src={image}
               alt={`Slide ${index + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
             />
           </div>
         ))}
@@ -34,14 +34,14 @@ const ImageSlider = ({ images = [] }) => {
       
       <button
         onClick={prevSlide}
-        className="absolute left-2 top-1/2 -translate-y-1/2 p-1 sm:p-2 rounded-sm bg-black/30 text-white hover:bg-black/75"
+        className="absolute left-2 top-1/2 -translate-y-1/2 p-1 sm:p-2 rounded-sm bg-black/30 text-white hover:bg-black/50 transition-colors duration-300"
       >
         <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
       </button>
       
       <button
         onClick={nextSlide} 
-        className="absolute right-2 top-1/2 -translate-y-1/2 p-1 sm:p-2 rounded-sm bg-black/30 text-white hover:bg-black/75"
+        className="absolute right-2 top-1/2 -translate-y-1/2 p-1 sm:p-2 rounded-sm bg-black/30 text-white hover:bg-black/50 transition-colors duration-300"
       >
         <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
       </button>

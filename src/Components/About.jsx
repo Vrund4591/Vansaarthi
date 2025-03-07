@@ -1,5 +1,7 @@
 import React from 'react';
 import Card from './Card';
+import { AnimateOnScroll } from "./AnimateonScroll";
+import { motion } from "framer-motion";
 
 const About = () => {
     const members = [
@@ -19,12 +21,15 @@ const About = () => {
         <div className="container mx-auto py-10">
             <div className="flex w-full">
                 <div className="flex justify-start items-start px-4">
+            <AnimateOnScroll animation="slideIn">
                 <Card backgroundColor="bg-[#3BDE3B]" textColor="text-black">
                     <div className="text-4xl font-bold px-6 py-2 text-black">About Vansaarthi</div>
                 </Card>
+            </AnimateOnScroll>
                 </div>
             </div>
-        
+
+            <AnimateOnScroll animation="slideIn">
             <div className="flex flex-col md:flex-row gap-6 py-4 px-4 w-full">
                 <div className="flex-1">
                     <Card backgroundColor="bg-white" textColor="text-black">
@@ -65,6 +70,7 @@ const About = () => {
                     </Card>
                 </div>
             </div>
+            </AnimateOnScroll>
         </div>
         {/* <div className="grid grid-cols-2 md:grid-cols-2 gap-12 px-4 mb-20">
             <div className="h-full">
@@ -110,29 +116,47 @@ const About = () => {
             </div>
         </div> */}
         <div className='bg-slate-100'>
-        <div className=" px-4 mx-20 py-20">
-            <div className='flex'>
+          <div className="px-4 mx-20 py-20">
+            <AnimateOnScroll animation="slideIn">
+              <div className='flex'>
                 <div className="flex justify-start mb-12">
-                    <Card backgroundColor="bg-[#F97316]" textColor="text-black">
-                        <div className="text-4xl font-bold px-6 py-2">Meet Our Committee</div>
-                    </Card>
+                  <Card backgroundColor="bg-[#F97316]" textColor="text-black">
+                    <div className="text-4xl font-bold px-6 py-2">Meet Our Committee</div>
+                  </Card>
                 </div>
-            </div>
+              </div>
+            </AnimateOnScroll>
           
             <div className='grid grid-cols-4 gap-10 mx-10 px-10 py-10'>
-                {members.map((item, index) => (
-                    <div className="flex justify-start" key={index}>
-                        <Card backgroundColor="bg-white" textColor="text-black">
-                            <div className="p-6">
-                                <div className="w-32 h-32 mx-auto mb-4 bg-gray-200 rounded-full" />
-                                <div className="text-xl font-bold text-center">{item.name}</div>
-                                <div className="text-center text-gray-600">{item.position}</div>
-                            </div>
-                        </Card>
-                    </div>
-                ))}
+              {members.map((item, index) => (
+                <AnimateOnScroll 
+                  key={index} 
+                  animation="fadeUp"
+                  style={{ 
+                    animationDelay: `${index * 0.2}s` 
+                  }}
+                >
+                  <motion.div
+                    whileHover={{ 
+                      scale: 1.05,
+                      transition: { duration: 0.2 }
+                    }}
+                    className="flex justify-start"
+                  >
+                    <Card backgroundColor="bg-white" textColor="text-black">
+                      <div className="p-6">
+                        <div className="w-32 h-32 mx-auto mb-4 bg-gray-200 rounded-full overflow-hidden">
+                          {/* Add image here if available */}
+                        </div>
+                        <div className="text-xl font-bold text-center">{item.name}</div>
+                        <div className="text-center text-gray-600">{item.position}</div>
+                      </div>
+                    </Card>
+                  </motion.div>
+                </AnimateOnScroll>
+              ))}
             </div>
-        </div>
+          </div>
         </div>
     </div>
   );

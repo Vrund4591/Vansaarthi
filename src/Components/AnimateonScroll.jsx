@@ -2,11 +2,14 @@ import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
-export const AnimateOnScroll = ({ children, animation }) => {
+export const AnimateOnScroll = ({ children, animation, onAnimationComplete }) => {
   const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.3 });
+  const [ref, inView] = useInView({ 
+    threshold: 0.3,
+    triggerOnce: false // Changed to false to allow re-animation
+  });
 
-  const animations = {
+const animations = {
     fadeUp: {
       visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
       hidden: { opacity: 0, y: 50 }
@@ -27,7 +30,11 @@ export const AnimateOnScroll = ({ children, animation }) => {
 
   useEffect(() => {
     if (inView) {
-      controls.start("visible");
+      controls.start("visible").then(() => {
+        onAnimationComplete?.(); // Call the callback if provided
+      });
+    } else {
+      controls.start("hidden");
     }
   }, [controls, inView]);
 
