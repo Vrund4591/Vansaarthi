@@ -15,7 +15,7 @@ const Signup = ({ setShowSignup }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleGoogleLogin = () => {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    const apiUrl = import.meta.env.VITE_API_URL ;
     window.location.href = `${apiUrl}/api/auth/google`;
   };
 
@@ -43,7 +43,7 @@ const Signup = ({ setShowSignup }) => {
 
     try {
       const avatarUrl = generateAvatarUrl(formData.name);
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+      const apiUrl = import.meta.env.VITE_API_URL ;
       const response = await fetch(`${apiUrl}/api/signup`, {
         method: 'POST',
         headers: {

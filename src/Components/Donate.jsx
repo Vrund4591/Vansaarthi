@@ -39,7 +39,7 @@ const Donate = ({ onClose }) => {
     const amount = customAmount || selectedAmount;
     
     try {
-      const response = await fetch(`http://localhost:3000/api/qr-code/active?amount=${amount}`, {
+      const response = await fetch(`http://${import.meta.env.VITE_API_URL}/api/qr-code/active?amount=${amount}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
