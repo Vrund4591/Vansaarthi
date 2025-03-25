@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from "framer-motion"; // Add AnimatePresence import
 import { AnimateOnScroll } from "./AnimateonScroll";
 import { useNavigate, Link } from 'react-router-dom';
+import AnimatedCounter from './AnimatedCounter';
 // import bg from '../../public/bg.jpg';
 const bg = '/bg.jpg';
 const impactData = [
@@ -217,19 +218,25 @@ const HomePage = () => {
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
             <AnimateOnScroll animation="scale">
               <div className='flex flex-col justify-center items-center bg-white w-full h-32 rounded-xl border-dashed border-green-400 border-2 text-center'>
-                  <div className='text-2xl font-bold p-2'>10000 Trees</div>
+                  <div className='text-2xl font-bold p-2'>
+                    <AnimatedCounter end={10000} /> Trees
+                  </div>
                   <div className='text-sm p-2'>Target Trees to be Planted</div>
               </div>
             </AnimateOnScroll>
             <AnimateOnScroll animation="scale">
               <div className='flex flex-col justify-center items-center bg-white w-full h-32 rounded-xl border-dashed border-green-400 border-2 text-center'>
-                  <div className='text-2xl font-bold p-2'>3000 Animals</div>
+                  <div className='text-2xl font-bold p-2'>
+                    <AnimatedCounter end={3000} /> Animals
+                  </div>
                   <div className='text-sm p-2'>Target Animals to be Rescued</div>
               </div>
             </AnimateOnScroll>
             <AnimateOnScroll animation="scale">
               <div className='flex flex-col justify-center items-center bg-white w-full h-32 rounded-xl border-dashed  border-green-400 border-2 text-center'>
-                  <div className='text-2xl font-bold p-2'>50 Communities</div>
+                  <div className='text-2xl font-bold p-2'>
+                    <AnimatedCounter end={50} /> Communities
+                  </div>
                   <div className='text-sm p-2'>Target Communities to Empower</div>
               </div>
             </AnimateOnScroll>
@@ -260,7 +267,9 @@ const HomePage = () => {
                 <div className='w-full'>
                   <Card backgroundColor="bg-white hover:bg-gray-50 transition-colors" textColor="text-black">
                     <div className='flex flex-col justify-center items-center h-28 w-full'>
-                      <div className={`text-4xl font-bold ${item.color}`}>{item.number}</div>
+                      <div className={`text-4xl font-bold ${item.color}`}>
+                        <AnimatedCounter end={parseInt(item.number)} />
+                      </div>
                       <div className='text-gray-600 font-medium'>{item.text}</div>
                     </div>
                   </Card>
