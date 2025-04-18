@@ -85,9 +85,9 @@ const Navigation = () => {
         <nav className='w-full bg-white border-b-4 border-black px-4 md:px-8'>
             <div className='flex justify-between items-center gap-2 p-3'>
                 <Link to="/" className='flex items-center gap-2 px-2 md:px-9 hover:opacity-90'>
-                    <div className='flex items-center justify-center'>
+                    <div className='flex items-center justify-center min-w-[45px] min-h-[45px] md:min-w-[55px] md:min-h-[55px]'>
                         <Card backgroundColor="bg-green-400" textColor="text-white">
-                            <img src="\Vansaarthi.svg" alt="Vansaarthi Logo" height={110} width={45} className="my-auto" />
+                            <img src="\Vansaarthi.svg" alt="Vansaarthi Logo" className="w-[45px] h-auto md:w-[55px] my-auto object-contain" />
                         </Card>
                     </div>
                     <div className='text-xl md:text-3xl font-semibold kumar text-green-700 flex items-center justify-center self-center my-auto pt-1.5 md:pt-2'>વનસારથી</div>

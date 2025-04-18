@@ -45,6 +45,20 @@ const ImageSlider = ({ images = [] }) => {
       >
         <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
       </button>
+
+      {/* Indicator dots */}
+      <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
+        {images.map((_, index) => (
+          <button 
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`w-2 h-2 rounded-full transition-all ${
+              index === currentIndex ? 'bg-white w-3' : 'bg-white/50'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
     </div>
   );
 };
