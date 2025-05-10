@@ -1,4 +1,4 @@
-import { TreePine, Heart, UsersRound, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { TreePine, Heart, UsersRound, Facebook, Instagram, Youtube, Linkedin } from 'lucide-react';
 import Card from "./Card";
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from "framer-motion"; // Add AnimatePresence import
@@ -482,13 +482,26 @@ const HomePage = () => {
                 <div>
                     <div id='contact-section' className='text-md font-semibold mb-4'>Connect</div>
                     <div className='flex gap-4'>
-                        <div className='hover:text-gray-300 cursor-pointer'><a href="https://www.facebook.com/p/Vansaarthi-Ngo-61572960507082/?hr=1&_rdr" target="_blank" rel="noopener noreferrer">
+                        <div className='hover:text-gray-300 cursor-pointer'>
+                            <a href="https://www.facebook.com/p/Vansaarthi-Ngo-61572960507082/?hr=1&_rdr" target="_blank" rel="noopener noreferrer">
                                 <Facebook />
-                            </a></div>
-                        <div className='hover:text-gray-300 cursor-pointer'><Twitter /></div>
+                            </a>
+                        </div>
+                        <div className='hover:text-gray-300 cursor-pointer'>
+                            <a href="https://x.com/vansaarthi11?t=5z4OAS65azg4uo0X3AQ-IA&s=09" target="_blank" rel="noopener noreferrer">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7" viewBox="0 0 50 50" fill="currentColor">
+                                    <path d="M 11 4 C 7.134 4 4 7.134 4 11 L 4 39 C 4 42.866 7.134 46 11 46 L 39 46 C 42.866 46 46 42.866 46 39 L 46 11 C 46 7.134 42.866 4 39 4 L 11 4 z M 13.085938 13 L 21.023438 13 L 26.660156 21.009766 L 33.5 13 L 36 13 L 27.789062 22.613281 L 37.914062 37 L 29.978516 37 L 23.4375 27.707031 L 15.5 37 L 13 37 L 22.308594 26.103516 L 13.085938 13 z M 16.914062 15 L 31.021484 35 L 34.085938 35 L 19.978516 15 L 16.914062 15 z" />
+                                </svg>
+                            </a>
+                        </div>
                         <div className='hover:text-gray-300 cursor-pointer'>
                             <a href="https://www.instagram.com/vansaarthi11/" target="_blank" rel="noopener noreferrer">
                                 <Instagram />
+                            </a>
+                        </div>
+                        <div className='hover:text-gray-300 cursor-pointer'>
+                            <a href="https://youtube.com/@vansarthi?si=Str6cB3kDyglow7T" target="_blank" rel="noopener noreferrer">
+                                <Youtube />
                             </a>
                         </div>
                         {/* <div className='hover:text-gray-300 cursor-pointer'><Linkedin /></div> */}
@@ -503,7 +516,7 @@ const HomePage = () => {
                 </div>
             </div>
             <div className='py-6 border-t border-slate-100/30 text-center text-sm'>
-                &copy; 2024 Vansaarthi. All rights reserved.
+                &copy; 2025 Vansaarthi. All rights reserved.
             </div>
         </div>
       </motion.footer>

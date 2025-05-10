@@ -93,101 +93,101 @@ const Signup = ({ setShowSignup }) => {
   };
 
   return (
-    <div className="p-8">
-      <h2 className="text-2xl font-bold mb-6">Sign Up</h2>
-      {error && <div className="text-red-500 mb-4">{error}</div>}
-      
-      <form onSubmit={handleSubmit}>
-        <div className="my-2">Username</div>
-        <div>
-          <Card>
-            <input 
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              className="w-[630px] px-2 py-2"
-              placeholder="Enter your username"
-              type="text"
-            />
-          </Card>
-        </div>
+    <div className="min-h-[80vh] md:min-h-[60vh] w-full flex items-center justify-center py-8">
+      <div className="w-full max-w-[440px] md:max-w-[600px] px-4">
+        <div className="bg-white rounded-lg">
+          <form onSubmit={handleSubmit} className="p-6 md:p-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Sign Up</h2>
+            {error && <div className="text-red-500 text-center mb-6">{error}</div>}
+            
+            <div className="mb-6">
+              <div className="font-medium text-gray-700 mb-2">Username</div>
+              <Card>
+                <input 
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3"
+                  placeholder="Enter your username"
+                  type="text"
+                />
+              </Card>
+            </div>
 
-        <div className="my-2">Email</div>
-        <div>
-          <Card>
-            <input 
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className="w-[630px] px-2 py-2"
-              placeholder="Enter your email"
-              type="email"
-            />
-          </Card>
-        </div>
+            <div className="mb-6">
+              <div className="font-medium text-gray-700 mb-2">Email</div>
+              <Card>
+                <input 
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3"
+                  placeholder="Enter your email"
+                  type="email"
+                />
+              </Card>
+            </div>
 
-        <div className="my-2">Password</div>
-        <div>
-          <Card>
-            <input 
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              className="w-[630px] px-2 py-2"
-              placeholder="Enter your password"
-              type="password"
-            />
-          </Card>
-        </div>
+            <div className="mb-6">
+              <div className="font-medium text-gray-700 mb-2">Password</div>
+              <Card>
+                <input 
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3"
+                  placeholder="Enter your password"
+                  type="password"
+                />
+              </Card>
+            </div>
 
-        <div className="flex">
-          <div className="py-4 px-1">
-            <CustomCheckbox 
-              label="I agree to the terms and conditions"
-              checked={isChecked}
-              onChange={setIsChecked}
-            />
-          </div>
-        </div>
+            <div className="flex justify-start pt-2">
+              <CustomCheckbox 
+                label="I agree to the terms and conditions"
+                checked={isChecked}
+                onChange={setIsChecked}
+              />
+            </div>
 
-        <div>
-          <Card backgroundColor="bg-[#3BDE3B]" textColor="text-black">
-            <button type="submit" className="text-xl font-semibold w-[630px] py-2">
-              Sign Up
-            </button>
-          </Card>
-        </div>
+            <div className="pt-4">
+              <Card backgroundColor="bg-[#3BDE3B]" textColor="text-black">
+                <button type="submit" className="w-full text-base md:text-lg font-semibold py-3">
+                  Sign Up
+                </button>
+              </Card>
+            </div>
 
-        <div className="flex items-center my-4">
-          <div className="flex-1 border-t border-gray-300"></div>
-          <div className="mx-4 text-gray-500">or</div>
-          <div className="flex-1 border-t border-gray-300"></div>
-        </div>
+            <div className="flex items-center my-6">
+              <div className="flex-1 border-t border-gray-300"></div>
+              <div className="mx-4 text-gray-500">or</div>
+              <div className="flex-1 border-t border-gray-300"></div>
+            </div>
 
-        <div>
-          <Card backgroundColor="bg-white" textColor="text-black">
-            <button 
-              type="button"
-              onClick={handleGoogleLogin}
-              className="flex items-center justify-center w-[630px] py-2"
-            >
-              <img src="/google.jpg" alt="Google" className="w-6 h-6 mr-2" />
-              <span>Continue with Google</span>
-            </button>
-          </Card>
-        </div>
+            <Card backgroundColor="bg-white" textColor="text-black">
+              <button 
+                type="button"
+                onClick={handleGoogleLogin}
+                className="flex items-center justify-center w-full py-3"
+              >
+                <img src="/google.jpg" alt="Google" className="w-6 h-6 mr-3" />
+                <span>Continue with Google</span>
+              </button>
+            </Card>
 
-        <div className="text-center mt-4">
-          <span className="text-gray-600">Already have an account? </span>
-          <button
-            type="button"
-            onClick={() => setShowSignup(false)}
-            className="text-green-500"
-          >
-            Log in
-          </button>
+            <div className="text-center pt-4">
+              <span className="text-gray-600">Already have an account? </span>
+              <button
+                type="button"
+                onClick={() => setShowSignup(false)}
+                className="text-green-500 hover:text-green-600 font-medium"
+              >
+                Log in
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

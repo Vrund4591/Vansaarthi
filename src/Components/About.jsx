@@ -47,7 +47,7 @@ const About = () => {
             avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=GautamRajpurohit&backgroundColor=transparent"
         },
         { 
-            name: "Kalyan Rajpurohit", 
+            name: "Kalyan Purohit", 
             position: "Trust Member", 
             avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=KalyanRajpurohit&backgroundColor=transparent"
         },
@@ -85,8 +85,8 @@ const About = () => {
                     }}
                 />
                 <div 
-                    className="absolute inset-0 flex items-center justify-center hidden" 
-                    style={{ backgroundColor: 'rgba(182, 227, 161, 0.7)' }}
+                    className="absolute inset-0 flex items-center justify-center" 
+                    style={{ display: 'none', backgroundColor: 'rgba(182, 227, 161, 0.7)' }}
                 >
                     <span className="text-lg sm:text-xl md:text-2xl font-bold text-green-800">
                         {getInitials(item.name)}
