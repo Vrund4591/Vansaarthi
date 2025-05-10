@@ -24,17 +24,17 @@ const About = () => {
         { 
             name: "Kush Chaudhary", 
             position: "Trust Member", 
-            image: "/members/kush-chaudhary.jpg"  // Standardized path
+            image: "/members/Kush Chaudhary.jpeg"  // Standardized path
         },
         { 
             name: "Varshil Patel", 
             position: "Trust Member", 
-            image: "/members/varshil-patel.jpg"  // Standardized path
+            image: "/members/Varshil Patel.jpeg"  // Standardized path
         },
         { 
             name: "Nisarg Chaudhary", 
             position: "Trust Member", 
-            image: "/members/nisarg-chaudhary.jpg"  // Standardized path
+            image: "/members/Nisarg Chaudhary.jpeg"  // Standardized path
         },
         { 
             name: "Hariom Tarar", 
@@ -44,7 +44,7 @@ const About = () => {
         { 
             name: "Gautam Rajpurohit", 
             position: "Trust Member", 
-            image: "/images/members/gautam-rajpurohit.jpg"
+            image: "/members/Gautam Rajpurohit.jpeg"
         },
         { 
             name: "Kalyan Purohit", 
@@ -54,7 +54,7 @@ const About = () => {
         { 
             name: "Avadh Chaudhary", 
             position: "Trust Member", 
-            image: "/images/members/avadh-chaudhary.jpg"
+            image: "/members/Avadh Chaudhary.jpeg"
         },
         { 
             name: "Dev Chaudhary", 
