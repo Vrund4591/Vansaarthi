@@ -84,7 +84,7 @@ const Navigation = () => {
     <>
         <nav className='w-full bg-white border-b-4 border-black px-4 md:px-8'>
             <div className='flex justify-between items-center gap-2 p-3'>
-                <Link to="/" className='flex items-center gap-2 px-2 md:px-9 hover:opacity-90'>
+                <Link to="/" className='flex items-center gap-2 px-0 md:px-9 hover:opacity-90'>
                     <div className='flex items-center justify-center min-w-[45px] min-h-[45px] md:min-w-[55px] md:min-h-[55px]'>
                         <Card backgroundColor="bg-green-400" textColor="text-white">
                             <img src="\Vansaarthi.svg" alt="Vansaarthi Logo" className="w-[45px] h-auto md:w-[55px] my-auto object-contain" />
@@ -190,7 +190,7 @@ const Navigation = () => {
             
             {/* Mobile menu dropdown */}
             {isMobileMenuOpen && (
-                <div className="md:hidden bg-white py-2 px-4 shadow-lg">
+                <div className="md:hidden bg-white py-2 px-4 ">
                     <div className="flex flex-col space-y-3">
                         <Link to="/" className='py-1 hover:text-green-400'>Home</Link>
                         <Link to="/about" className='py-1 hover:text-green-400'>About</Link>

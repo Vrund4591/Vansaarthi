@@ -43,7 +43,7 @@ const Signup = ({ setShowSignup }) => {
 
     try {
       const avatarUrl = generateAvatarUrl(formData.name);
-      const apiUrl = import.meta.env.VITE_API_URL ;
+      const apiUrl = import.meta.env.VITE_API_URL;
       const response = await fetch(`${apiUrl}/api/signup`, {
         method: 'POST',
         headers: {
@@ -93,56 +93,56 @@ const Signup = ({ setShowSignup }) => {
   };
 
   return (
-    <div className="min-h-[80vh] md:min-h-[60vh] w-full flex items-center justify-center py-8">
-      <div className="w-full max-w-[440px] md:max-w-[600px] px-4">
-        <div className="bg-white rounded-lg">
-          <form onSubmit={handleSubmit} className="p-6 md:p-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Sign Up</h2>
-            {error && <div className="text-red-500 text-center mb-6">{error}</div>}
+    <div className="w-full flex items-center justify-center py-4 md:py-6 lg:py-12">
+      <div className="w-full max-w-[100%] sm:max-w-[440px] md:max-w-[500px] lg:max-w-[520px] px-3 md:px-4">
+        <div className="bg-white rounded-lg ">
+          <form onSubmit={handleSubmit} className="p-4 md:p-6 lg:p-8">
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-6 lg:mb-5">Sign Up</h2>
+            {error && <div className="text-red-500 text-center mb-4 md:mb-6 text-sm md:text-base">{error}</div>}
             
-            <div className="mb-6">
-              <div className="font-medium text-gray-700 mb-2">Username</div>
+            <div className="mb-3 md:mb-4 lg:mb-4">
+              <div className="font-medium text-gray-700 mb-1 md:mb-2 text-sm md:text-base">Username</div>
               <Card>
                 <input 
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3"
+                  className="w-full px-3 md:px-4 py-2 md:py-3 text-sm md:text-base"
                   placeholder="Enter your username"
                   type="text"
                 />
               </Card>
             </div>
 
-            <div className="mb-6">
-              <div className="font-medium text-gray-700 mb-2">Email</div>
+            <div className="mb-3 md:mb-4 lg:mb-4">
+              <div className="font-medium text-gray-700 mb-1 md:mb-2 text-sm md:text-base">Email</div>
               <Card>
                 <input 
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3"
+                  className="w-full px-3 md:px-4 py-2 md:py-3 lg:py-3.5 text-sm md:text-base"
                   placeholder="Enter your email"
                   type="email"
                 />
               </Card>
             </div>
 
-            <div className="mb-6">
-              <div className="font-medium text-gray-700 mb-2">Password</div>
+            <div className="mb-3 md:mb-4 lg:mb-4">
+              <div className="font-medium text-gray-700 mb-1 md:mb-2 text-sm md:text-base">Password</div>
               <Card>
                 <input 
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3"
+                  className="w-full px-3 md:px-4 py-2 md:py-3 lg:py-3.5 text-sm md:text-base"
                   placeholder="Enter your password"
                   type="password"
                 />
               </Card>
             </div>
 
-            <div className="flex justify-start pt-2">
+            <div className="flex justify-start pt-1 md:pt-2">
               <CustomCheckbox 
                 label="I agree to the terms and conditions"
                 checked={isChecked}
@@ -150,17 +150,17 @@ const Signup = ({ setShowSignup }) => {
               />
             </div>
 
-            <div className="pt-4">
+            <div className="pt-3 md:pt-4">
               <Card backgroundColor="bg-[#3BDE3B]" textColor="text-black">
-                <button type="submit" className="w-full text-base md:text-lg font-semibold py-3">
+                <button type="submit" className="w-full text-sm md:text-lg font-semibold py-2 md:py-3 lg:py-3.5">
                   Sign Up
                 </button>
               </Card>
             </div>
 
-            <div className="flex items-center my-6">
+            <div className="flex items-center my-4 md:my-6">
               <div className="flex-1 border-t border-gray-300"></div>
-              <div className="mx-4 text-gray-500">or</div>
+              <div className="mx-2 md:mx-4 text-gray-500 text-sm md:text-base">or</div>
               <div className="flex-1 border-t border-gray-300"></div>
             </div>
 
@@ -168,14 +168,14 @@ const Signup = ({ setShowSignup }) => {
               <button 
                 type="button"
                 onClick={handleGoogleLogin}
-                className="flex items-center justify-center w-full py-3"
+                className="flex items-center justify-center w-full py-2 md:py-3 lg:py-3.5"
               >
-                <img src="/google.jpg" alt="Google" className="w-6 h-6 mr-3" />
-                <span>Continue with Google</span>
+                <img src="/google.jpg" alt="Google" className="w-5 h-5 md:w-6 md:h-6 mr-2 md:mr-3" />
+                <span className="text-sm md:text-base">Continue with Google</span>
               </button>
             </Card>
 
-            <div className="text-center pt-4">
+            <div className="text-center pt-3 md:pt-4 text-sm md:text-base">
               <span className="text-gray-600">Already have an account? </span>
               <button
                 type="button"

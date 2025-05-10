@@ -1,100 +1,67 @@
-import React from 'react';
+import React from 'react'; // Remove useState as it's not needed anymore
 import Card from './Card';
 import { AnimateOnScroll } from "./AnimateonScroll";
 import { motion } from "framer-motion";
 
 const About = () => {
-    // Committee members with human-like illustrations using Notionists style
+    // Committee members with standardized image paths
     const members = [
         { 
             name: "Yash Chaudhary", 
             position: "Founder", 
-            avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=YashChaudhary&backgroundColor=transparent"
+            image: "/members/yash Chaudhary.jpeg"  // Fixed filename format
         },
         { 
             name: "Vrund Chaudhary", 
             position: "Co-Founder", 
-            avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=VrundChaudhary&backgroundColor=transparent" 
+            image: "/members/Vrund Chaudharu.jpeg"  // Standardized path
         },
         { 
             name: "Raj Prajapati", 
             position: "Co-Founder", 
-            avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=RajPrajapati&backgroundColor=transparent"
+            image: "/members/Raj Prajapati.jpeg"  // Standardized path
         },
         { 
             name: "Kush Chaudhary", 
             position: "Trust Member", 
-            avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=KushChaudhary&backgroundColor=transparent"
+            image: "/members/kush-chaudhary.jpg"  // Standardized path
         },
         { 
             name: "Varshil Patel", 
             position: "Trust Member", 
-            avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=VarshilPatel&backgroundColor=transparent"
+            image: "/members/varshil-patel.jpg"  // Standardized path
         },
         { 
             name: "Nisarg Chaudhary", 
             position: "Trust Member", 
-            avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=NisargChaudhary&backgroundColor=transparent"
+            image: "/members/nisarg-chaudhary.jpg"  // Standardized path
         },
         { 
             name: "Hariom Tarar", 
             position: "Trust Member", 
-            avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=HariomTarar&backgroundColor=transparent"
+            image: "/members/Hariom Tarar.jpeg"  // Standardized path
         },
         { 
             name: "Gautam Rajpurohit", 
             position: "Trust Member", 
-            avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=GautamRajpurohit&backgroundColor=transparent"
+            image: "/images/members/gautam-rajpurohit.jpg"
         },
         { 
             name: "Kalyan Purohit", 
             position: "Trust Member", 
-            avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=KalyanRajpurohit&backgroundColor=transparent"
+            image: "/members/Kalyan Purohit.jpeg"
         },
         { 
             name: "Avadh Chaudhary", 
             position: "Trust Member", 
-            avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=AvadhChaudhary&backgroundColor=transparent"
+            image: "/images/members/avadh-chaudhary.jpg"
         },
         { 
             name: "Dev Chaudhary", 
             position: "Trust Member", 
-            avatar: "https://api.dicebear.com/7.x/notionists/svg?seed=DevChaudhary&backgroundColor=transparent"
+            image: "/members/Dev Chaudhary.jpeg"
         },
     ];
-
-    // Function to get initials from name
-    const getInitials = (name) => {
-        return name
-            .split(' ')
-            .map(word => word[0])
-            .join('');
-    };
-
-    // Enhanced render function with fallback to initials if image fails to load
-    const renderAvatar = (item) => (
-        <div className="mx-auto mb-2 md:mb-4">
-            <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full shadow-lg border-2 border-green-700 overflow-hidden bg-gradient-to-b from-green-100 to-green-200 relative">
-                <img
-                    src={item.avatar}
-                    alt={`${item.name} avatar`}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
-                    }}
-                />
-                <div 
-                    className="absolute inset-0 flex items-center justify-center" 
-                    style={{ display: 'none', backgroundColor: 'rgba(182, 227, 161, 0.7)' }}
-                >
-                    <span className="text-lg sm:text-xl md:text-2xl font-bold text-green-800">
-                        {getInitials(item.name)}
-                    </span>
-                </div>
-            </div>
-        </div>
-    );
 
   return (
     <div className="w-full min-h-screen">
@@ -182,7 +149,15 @@ const About = () => {
                   >
                     <Card backgroundColor="bg-white" textColor="text-black" className="w-full">
                       <div className="p-3 sm:p-4 md:p-5 lg:p-6">
-                        {renderAvatar(item)}
+                        <div className="mx-auto mb-2 md:mb-4">
+                          <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full shadow-lg border-2 border-green-700 overflow-hidden bg-gradient-to-b from-green-100 to-green-200 relative">
+                            <img
+                              src={item.image}
+                              alt={`${item.name}`}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        </div>
                         <div className="text-base sm:text-lg md:text-xl font-bold text-center">{item.name}</div>
                         <div className="text-xs sm:text-sm md:text-base text-center text-gray-600">{item.position}</div>
                       </div>
