@@ -298,17 +298,17 @@ const HomePage = () => {
           <AnimateOnScroll animation="fadeIn">
             <div className='relative h-[500px] md:h-[700px] flex items-center justify-center overflow-hidden'>
               {galleryData.length > 0 ? (
-                <div className='absolute w-full h-full flex items-center justify-center'>
+                <div className='absolute w-full h-full flex items-center justify-center' style={{ perspective: '2500px' }}>
                   {/* Previous Image */}
                   {getImageAt(currentImageIndex - 1) && (
                     <div 
                       className="absolute w-2/5 h-[280px] md:h-[420px] transition-all duration-500 ease-in-out
-                          hover:opacity-75 cursor-pointer"
+                          hover:opacity-60 cursor-pointer"
                       style={{
                         left: '5%',
-                        transform: 'perspective(2000px) rotateY(45deg) translateX(-100px) translateZ(-150px) scale(0.85)',
+                        transform: 'perspective(2500px) rotateY(45deg) translateX(-120px) translateZ(-350px) scale(0.8)',
                         transformOrigin: 'right center',
-                        opacity: 0.6,
+                        opacity: 0.35,
                         zIndex: 1
                       }}
                       onClick={() => handleImageChange((currentImageIndex - 1 + galleryData.length) % galleryData.length)}
@@ -316,7 +316,7 @@ const HomePage = () => {
                       <img 
                         src={getImageAt(currentImageIndex - 1)?.src} 
                         alt={getImageAt(currentImageIndex - 1)?.title || 'Previous image'} 
-                        className='w-full h-full object-cover rounded-lg shadow-2xl'
+                        className='w-full h-full object-cover rounded-lg shadow-2xl brightness-75'
                         draggable="false"
                         loading="eager"
                       />
@@ -337,21 +337,24 @@ const HomePage = () => {
                           x: { type: "spring", stiffness: 300, damping: 30 },
                           opacity: { duration: 0.2 }
                         }}
-                        className="absolute w-3/5 h-[320px] md:h-[480px]"
+                        className="absolute w-[70%] h-[320px] md:h-[480px] bg-black rounded-lg"
                         style={{
                           transformOrigin: 'center center',
-                          zIndex: 2
+                          zIndex: 999,
+                          boxShadow: '0 0 50px 20px rgba(0,0,0,0.5)',
+                          overflow: 'hidden'
                         }}
                       >
-                        <div className='relative h-full rounded-lg overflow-hidden shadow-2xl'>
+                        <div className='relative h-full w-full rounded-lg overflow-hidden shadow-2xl bg-black'>
                           <img 
                             src={getImageAt(currentImageIndex)?.src}
                             alt={getImageAt(currentImageIndex)?.title || 'Current image'}
                             className='w-full h-full object-cover transition-transform duration-700 hover:scale-105'
                             draggable="false"
                             loading="eager"
+                            style={{ zIndex: 998 }}
                           />
-                          <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6'>
+                          <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-6' style={{ zIndex: 999 }}>
                             <h3 className='text-xl font-semibold text-white'>
                               {getImageAt(currentImageIndex)?.title}
                             </h3>
@@ -368,12 +371,12 @@ const HomePage = () => {
                   {getImageAt(currentImageIndex + 1) && (
                     <div 
                       className="absolute w-2/5 h-[280px] md:h-[420px] transition-all duration-700 ease-out
-                          hover:opacity-75 cursor-pointer"
+                          hover:opacity-60 cursor-pointer"
                       style={{
                         right: '5%',
-                        transform: 'perspective(2000px) rotateY(-45deg) translateX(100px) translateZ(-150px) scale(0.85)',
+                        transform: 'perspective(2500px) rotateY(-45deg) translateX(120px) translateZ(-350px) scale(0.8)',
                         transformOrigin: 'left center',
-                        opacity: 0.6,
+                        opacity: 0.35,
                         zIndex: 1
                       }}
                       onClick={() => handleImageChange((currentImageIndex + 1) % galleryData.length)}
@@ -381,7 +384,7 @@ const HomePage = () => {
                       <img 
                         src={getImageAt(currentImageIndex + 1)?.src} 
                         alt={getImageAt(currentImageIndex + 1)?.title || 'Next image'} 
-                        className='w-full h-full object-cover rounded-lg shadow-2xl'
+                        className='w-full h-full object-cover rounded-lg shadow-2xl brightness-75'
                         draggable="false"
                       />
                     </div>
