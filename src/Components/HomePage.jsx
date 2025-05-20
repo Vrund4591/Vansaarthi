@@ -42,6 +42,38 @@ const HomePage = () => {
   const navigate = useNavigate();
   const [hasAnimated, setHasAnimated] = useState(false);
 
+  // Backend coldstart function
+  const initializeBackend = async () => {
+    try {
+      // Send a request to backend health/ping endpoint
+       // Using environment variable for backend URL
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/ping`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      console.log('Backend initialized:', response.ok);
+    } catch (error) {
+      // Silent fail - we don't want to interrupt user experience
+      // if backend is down or unreachable
+      console.log('Backend coldstart attempt:', error.message);
+    }
+  };
+
+  // Send backend initialization request on component mount
+  useEffect(() => {
+    // Immediately trigger backend warmup
+    initializeBackend();
+    
+    // You could also add a retry mechanism if needed
+    // const retryTimer = setTimeout(() => {
+    //   initializeBackend();
+    // }, 5000);
+    // return () => clearTimeout(retryTimer);
+  }, []);
+
   useEffect(() => {
     const titleTimer = setTimeout(() => setShowTitle(true), 800);
     const card1Timer = setTimeout(() => setShowCard1(true), 900);
