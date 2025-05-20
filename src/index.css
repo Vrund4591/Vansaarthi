@@ -28,3 +28,40 @@
   font-style: normal;
 
 }
+
+/* Chat message formatting */
+.chat-message strong {
+  font-weight: 600;
+}
+
+.chat-message em {
+  font-style: italic;
+}
+
+.chat-message code {
+  background-color: #f3f4f6;
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.25rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.875rem;
+  color: #d946ef;
+}
+
+.chat-message u {
+  text-decoration: underline;
+}
+
+.chat-message br {
+  margin-bottom: 0.5rem;
+}
+
+/* Add spacing for bullet points */
+.chat-message ul {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.chat-message ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
